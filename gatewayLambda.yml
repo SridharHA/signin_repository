@@ -1,0 +1,20 @@
+gatewayLambda:
+    handler: index.handler
+    name: signin-lambda
+    description: Lambda function for signin
+    role: arn:aws:iam::#{AWS::AccountId}:role/lambda_role
+    maximumRetryAttempts: 0
+    events:
+      - http:
+          path: signin
+          method: get
+          cors: true
+          request:
+             parameters:
+               querystrings:
+                  email: true
+                  password: true
+                  role: true
+
+          
+

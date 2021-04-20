@@ -1,0 +1,28 @@
+service: api-gateway-signin
+
+frameworkVersion: '2'
+
+
+provider:
+  name: aws
+  stage: ${opt:stage,'dev'}
+  runtime: nodejs12.x
+  timeout: 60
+  apiName: apigateway-signin
+  resourcePolicy:
+    - Effect: Allow
+      Principal: '*'
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/${opt:stage, self:provider.stage}/GET/signin
+      
+plugins:
+  - serverless-pseudo-parameters
+
+
+functions:
+  gatewayLambda: ${file(./gatewayLambda.yml):gatewayLambda}
+
+
+
+
